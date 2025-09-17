@@ -1,0 +1,53 @@
+{
+  "name": "aie2e",
+  "version": "0.1.1",
+  "description": "AI-powered end-to-end testing framework using browser automation",
+  "license": "MIT",
+  "author": "Shea Sullivan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aie2e/aie2e-node.git"
+  },
+  "homepage": "https://github.com/aie2e/aie2e-node#readme",
+  "bugs": {
+    "url": "https://github.com/aie2e/aie2e-node/issues"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "aie2e": "dist/cli.js"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
+  "keywords": [
+    "testing",
+    "e2e",
+    "browser-automation",
+    "ai",
+    "playwright",
+    "cli"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "prepare": "npm run build",
+    "dev": "tsx ./src/client.ts -c ./aie2e.config.example.ts ./example-tests",
+    "test": "echo \"No test specified\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.12",
+    "tsx": "^4.20.4",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "dotenv": "^17.2.2",
+    "yocto-spinner": "^1.0.0"
+  }
+}
