@@ -243,6 +243,3 @@ export const main = async (args: string[]) => {
     });
     process.exit(allPassed ? EXIT_CODES.SUCCESS : EXIT_CODES.FAILURE);
 };
-
-const args = process.argv.slice(2);
-main(args);

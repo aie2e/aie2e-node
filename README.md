@@ -34,6 +34,12 @@ source aie2e-env/bin/activate
 aie2e-env\Scripts\activate
 ```
 
+Install `uv` if it is not already installed
+```
+pip install uv
+```
+
+
 ### 3. Set up Environment Variables
 
 Create a `.env` file in your project root:

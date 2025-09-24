@@ -126,26 +126,6 @@ export class McpBrowserClient {
         } catch (error) {
             process.stderr.write(`Error closing MCP client: ${error}\n`);
         }
-
-        try {
-            if (this.transport) {
-                await this.transport.close();
-                this.transport = null;
-            }
-        } catch (error) {
-            process.stderr.write(`Error closing MCP transport: ${error}\n`);
-        }
-    }
-
-    addNotificationHandler(handler: (notification: McpProgressNotification) => void): void {
-        this.notificationHandlers.push(handler);
-    }
-
-    removeNotificationHandler(handler: (notification: McpProgressNotification) => void): void {
-        const index = this.notificationHandlers.indexOf(handler);
-        if (index > -1) {
-            this.notificationHandlers.splice(index, 1);
-        }
     }
 
     async runTestSession(session: TestSession): Promise<TestSessionResult> {
