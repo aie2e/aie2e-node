@@ -4,7 +4,7 @@
 
 // Application metadata
 export const APP_NAME = 'aie2e-client';
-export const APP_VERSION = '0.1.1';
+export const APP_VERSION = '0.1.2';
 
 // Default configuration
 export const DEFAULT_CONFIG = {

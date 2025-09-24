@@ -1,6 +1,6 @@
 {
   "name": "aie2e",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "AI-powered end-to-end testing framework using browser automation",
   "license": "MIT",
   "author": "Shea Sullivan",
