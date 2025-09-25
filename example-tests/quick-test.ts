@@ -1,3 +1,5 @@
 import { testCase } from '../src/core.js';
 
-testCase('Navigate to https://example.com')
+testCase('Verify that the page loads successfully', {initial_actions: [
+    { action: "go_to_url", arguments: { url: "https://example.com" } }
+]});
