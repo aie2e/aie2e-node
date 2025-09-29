@@ -86,8 +86,7 @@ Tests: 2/2 passed (0 failed)
 
 - **Node.js** >= 18.0.0
 - If using automatic management of the local MCP server
-  - **[uv](https://docs.astral.sh/uv/) Python manager**
-  - **Chrome or Chromium browser**
+  - **[uv](https://docs.astral.sh/uv/) Python package manager**
   - An API key for one of the supported LLM providers
 
 ## Quick Start
