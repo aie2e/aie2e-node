@@ -83,7 +83,7 @@ ${TEST_SESSION_FORMATTING.SEPARATOR}\n`);
     const sessionResult = await mcpClient.runTestSession(session).catch((error) => {
         process.stderr.write(`Error running test session: ${error}\n`);
         return { run_time: 0, passed: false, passed_tests: 0, total_tests: totalTests, description: session.description, failed_tests: totalTests };
-    });
+    }).finally(() => testCaseSpinner.stop());
 
     process.stdout.write(`\n
 ${TEST_SESSION_FORMATTING.SEPARATOR}
