@@ -114,26 +114,17 @@ OPENAI_API_KEY=your-openai-api-key-here
 
 ### 4. Create Configuration File
 
-Create `aie2e.config.ts` in your project root:
+Create `aie2e.config.toml` in your project root:
 
-```typescript
-import type { Aie2eConfig } from 'aie2e';
-
-const config: Aie2eConfig = {
-    // Configure stdio transport to automatically run the local
-    // Python server for test automation
-    transportConfig: {
-        transport: "stdio",
-        model: "gpt-4o-mini",
-        llmProvider: "openai",
-        apiKey: process.env.OPENAI_API_KEY
-    }
-};
-
-export default config;
+```toml
+[transport]
+type = "stdio"
+model = "gpt-4o-mini"
+llm_provider = "openai"
+api_key = "${OPENAI_API_KEY}"
 ```
 
-See [aie2e.config.example.ts](aie2e.config.example.ts) for more configuration options and examples.
+See [aie2e.config.example.toml](aie2e.config.example.toml) for more configuration options and examples.
 
 ### 5. Create Test Files
 
@@ -147,11 +138,20 @@ testCase('Verify that the page loads successfully', { initial_actions: [
   // Initial navigation action - replace with the url where your application is available
   // Alternatively, describe in the text of the test case how to navigate to the destination
   { action: "go_to_url", arguments: { url: "https://example.com" }} 
-]);
+]});
 
 ```
 
 See the [example-tests](example-tests) folder for additional test examples
+
+### 6. Run Tests
+
+Execute the test runner and see the results.
+
+In the project root, run
+```bash
+npx aie2e ./aie2e-tests
+```
 
 ## Writing Tests
 
@@ -169,12 +169,12 @@ import { testCase } from 'aie2e';
 testCase('Navigate to the homepage and verify the title contains "Welcome"');
 
 // Test cases can include additional configuration options
-testCase('Steps to execute:
+testCase(`Steps to execute:
 - Fill in the first name field with "John".
 - Fill in the age field with "25".
 - Submit the form.
 Acceptance Criteria:
-- The form should submit successfully without any validation errors.', {
+- The form should submit successfully without any validation errors.`, {
     initial_actions: [
         { action: "go_to_url", arguments: { url: "https://example.com/form" }}
     ],
@@ -274,33 +274,25 @@ AIE2E supports two transport mechanisms for connecting to the MCP server:
 
 The stdio transport launches the MCP server as a subprocess:
 
-```typescript
-{
-    // Stdio transport
-    transportConfig: {
-        transport: "stdio",
-        model: "gpt-4",
-        llmProvider: "openai" as const,
-        apiKey: process.env.OPENAI_API_KEY,
-        // Optional customization of the command to invoke the server
-        command: "uvx",
-        args: ["--from", "aie2e", "aie2e-server"]
-    }
-}
+```toml
+[transport]
+type = "stdio"
+model = "gpt-4"
+llm_provider = "openai"
+api_key = "${OPENAI_API_KEY}"
+# Optional customization of the command to invoke the server
+command = "uvx"
+args = ["--from", "aie2e", "aie2e-server"]
 ```
 
 #### HTTP Transport
 
 The HTTP transport connects to a running MCP server via HTTP:
 
-```typescript
-{
-    // HTTP transport
-    transportConfig: {
-        transport: "http",
-        url: "http://localhost:54321/mcp"
-    }
-}
+```toml
+[transport]
+type = "http"
+url = "http://localhost:54321/mcp"
 ```
 
 See the [AIE2E Server](https://github.com/aie2e/aie2e-server) project for instructions to install
@@ -331,7 +323,7 @@ Ollama may need some additional tweaking currently. Try some others and see what
 npx aie2e ./aie2e-tests
 
 # Use custom config file
-npx aie2e --config ./custom.config.ts ./aie2e-tests
+npx aie2e --config ./custom.config.toml ./aie2e-tests
 
 ```
 
@@ -350,7 +342,7 @@ npx aie2e --config ./custom.config.ts ./aie2e-tests
 - If tests are not working as expected, running the server manually is a great way
 to see more information about the process the test agent is using and any problems it encounters
 - Try manually installing the [AIE2E Server](https://github.com/aie2e/aie2e-server) and running it in HTTP mode
-- Edit the `aie2e.config.ts` file to use HTTP transport and connect to the running server
+- Edit the `aie2e.config.toml` file to use HTTP transport and connect to the running server
 - Review the output from the server to see all the steps the agent is taking to run the tests
 
 **Tests hanging or timing out**
@@ -383,13 +375,10 @@ Configuration for how to connect to the MCP server. Can be either stdio or HTTP 
 - **Default**: `undefined`
 - **Description**: Object containing sensitive data for form filling. The domain key specifies where the sensitive data may be used, including wildcard patterns. For each data pair, the key is the alias and the value is the sensitive data string. When writing test cases, use the pattern `x_alias` in place of the sensitive string to prevent leaking information to the LLM provider. The alias will be translated to the sensitive string when passed to the browser if within the allowed domain.
 - **Example**:
-```typescript
-sensitiveData: {
-  "https://*.example.com": { // Domain where the sensitive data may be submitted
-    user: "testuser@example.com", // Will be used to replace `x_user` in tasks
-    pass: "securepassword123" // Will be used to replace `x_pass` in tasks
-  }
-}
+```toml
+[sensitive_data."https://*.example.com"]
+user = "testuser@example.com"  # Will be used to replace `x_user` in tasks
+pass = "securepassword123"     # Will be used to replace `x_pass` in tasks
 ```
 
 #### `timeout` (optional)

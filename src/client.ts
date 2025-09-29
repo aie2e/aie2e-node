@@ -199,7 +199,7 @@ export const main = async (args: string[]) => {
 
     // Load config and initialize test suite before importing test files
     try {
-        const config = await loadConfig(configPath);
+        const config = loadConfig(configPath);
         initializeTestSuite(config);
     } catch (error) {
         process.stderr.write(`Error loading configuration: ${error}\n`);

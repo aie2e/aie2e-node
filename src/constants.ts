@@ -22,7 +22,7 @@ export const DEFAULT_CONFIG = {
 export const DEFAULT_HTTP_URL = 'http://localhost:3001/sse';
 
 // Configuration file names and search paths
-export const CONFIG_FILE_NAMES = ['aie2e.config.ts', 'aie2e.config.js'] as const;
+export const CONFIG_FILE_NAMES = ['aie2e.config.toml'] as const;
 export const CONFIG_SEARCH_SUBDIRS = ['config', '.config'] as const;
 
 // Supported LLM providers

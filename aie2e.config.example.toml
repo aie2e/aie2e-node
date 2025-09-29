@@ -1,0 +1,44 @@
+# aie2e Configuration File
+# This file configures the AI-powered end-to-end testing framework
+
+# Timeout for MCP tool calls in milliseconds (default: 300000 = 5 minutes)
+# timeout = 600000
+
+# Restrict navigation to specific domains
+# allowed_domains = ["https://*.example.com", "https://testsite.com"]
+
+# Transport configuration - defines how to connect to the MCP server
+[transport]
+type = "stdio"
+model = "gpt-4o-mini"
+llm_provider = "openai"
+api_key = "${OPENAI_API_KEY}"
+
+# Alternative: HTTP transport configuration
+# Uncomment this section and comment out the stdio section above to use HTTP
+# [transport]
+# type = "http"
+# url = "http://localhost:54321/mcp"
+
+# Alternative: Custom stdio transport configuration
+# [transport]
+# type = "stdio"
+# command = "python"
+# args = ["-m", "aie2e.mcp_server"]
+# llm_provider = "openai"
+# model = "gpt-4o-mini"
+# api_key = "${OPENAI_API_KEY}"
+# headless = true
+
+# Sensitive data for form filling
+# Keys in this object can be referenced in tasks using `x_keyname`
+# Values will be filled in automatically during test execution, without exposing the sensitive value to the LLM
+# See https://docs.browser-use.com/examples/templates/sensitive-data for details
+# [sensitive_data]
+# x_user = "${TEST_USERNAME}"
+# x_pass = "${TEST_PASSWORD}"
+
+# Example: Sensitive data for a specific domain
+# [sensitive_data."https://*.example.com"]
+# x_user = "${TEST_USERNAME:test-user@example.com}"
+# x_pass = "${TEST_PASSWORD:test-password123}"

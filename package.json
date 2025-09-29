@@ -34,7 +34,7 @@
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build",
     "prepare": "npm run build",
-    "dev": "tsx ./src/client.ts -c ./aie2e.config.example.ts ./example-tests",
+    "dev": "tsx ./src/client.ts -c ./aie2e.config.example.toml ./example-tests",
     "test": "echo \"No test specified\""
   },
   "engines": {
@@ -48,6 +48,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "dotenv": "^17.2.2",
+    "smol-toml": "^1.4.2",
     "yocto-spinner": "^1.0.0"
   }
 }
